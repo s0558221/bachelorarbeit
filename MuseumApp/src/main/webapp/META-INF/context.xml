@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/MuseumAppDB" 
+	      auth="Container" 
+	      type="javax.sql.DataSource" 
+	      driverClassName="org.postgresql.Driver" 
+	      url="jdbc:postgresql://db.f4.htw-berlin.de/_s0558221__museum_app_db"
+	      username="_s0558221__museum_app_db_generic" 
+	      password="admin2020" 	      
+	      maxActive="6" 
+	      maxIdle="3" 
+	      maxWait="10000"/>
+</Context>
+      
