@@ -16,7 +16,7 @@ import bean.Answer;
 
 public class AnswerDao {
 	private static String GET_ALL_ANSWERS = "select * from Quiz_Antworten";
-	private static String GET_ANSWER_BY_ID = "select * from Quiz_Antworten where id = ?";
+	private static String GET_ANSWER_BY_QUESTION_ID = "select * from Quiz_Antworten where Id_Frage = ?";
 
 	 private  DataSource ds;
 	 
@@ -30,36 +30,32 @@ public class AnswerDao {
 	        } 
 	    }
 	 
-	 public Answer getAnswerById(String id) {
-		 Answer answer = new Answer();
-			int i = -1;
-			if(!id.equals("") )
-			i = Integer.parseInt(id);
-			
-			Connection con = null;
+	 public  Collection<Answer> getAnswersByQuestionId(int id) {
+		 Collection<Answer> answers = new ArrayList<Answer>();
+
+	        Connection con = null;
 	        PreparedStatement stmt = null;
 	        ResultSet rs = null;
-	        if(i!=-1)
-	        {
+
 	        try {
 	            con = ds.getConnection();
-	            stmt = con.prepareStatement(GET_ANSWER_BY_ID);
-	            System.out.println("Statement= "+stmt);
-	            stmt.setInt(1, i);
+	            stmt = con.prepareStatement(GET_ANSWER_BY_QUESTION_ID);
+	            stmt.setInt(1, id);
 	            rs = stmt.executeQuery();
-	            
 	            while (rs.next()) {
+	            	Answer answer = new Answer();
 	            	answer.setId(rs.getInt(1));
 	            	answer.setText(rs.getString(2));
 	            	answer.setId_frage(rs.getInt(3));
 	            	answer.setIsCorrect(rs.getBoolean(4));
+	            	answers.add(answer);
 	            }
 	            
-	            return answer;
+	            return answers;
 	        } catch (SQLException e) {
 	            System.out.println("SQLException getting contact");
 	            e.printStackTrace();
-	            return answer;
+	            return answers;
 	        } finally {
 	            try {
 	                if (rs != null) rs.close();
@@ -69,9 +65,6 @@ public class AnswerDao {
 	                System.out.println("Exception in closing DB resources");
 	            } 
 	        }
-	        }
-	        else
-	        	return null;
 		}
 	 
 	 public Collection<Answer> getAllAnswers() {

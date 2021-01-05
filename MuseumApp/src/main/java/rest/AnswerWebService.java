@@ -22,12 +22,12 @@ public class AnswerWebService {
     }
 	
 	@GET 
-	@Path("/FindById")
+	@Path("/FindByQuestionId")
     @Produces(MediaType.APPLICATION_JSON)
-	public Answer getAnswerById(@QueryParam("id") String id)
+	public Collection<Answer> getAnswerById(@QueryParam("questionid") int id)
 	{
 		initAnswerDao();
-		return answerDao.getAnswerById(id);
+		return answerDao.getAnswersByQuestionId(id);
 	}
 
 	private void initAnswerDao() 

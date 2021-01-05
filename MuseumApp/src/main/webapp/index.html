@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    	<link rel="stylesheet" type="text/css" href="./css/styles.css" />
+	    <script src="js/quizfunctions.js"></script>
+	   	<meta charset="UTF-8" />
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+<body>
+    <div>
+    <h2>Quiz</h2>
+    	<Label for="difficulties-select">Schwierigkeitsgrad</Label>
+    	<select name="difficulties" id="difficulties-select" >
+		</select>
+		<script>
+			getAllDifficulties()
+		</script><br>
+		<Label for="topics-select">Thema</Label>
+		<select name="topics" id="topics-select">
+		</select>
+		<script>
+			getAllTopics()
+		</script><br>
+		<Button id="quiz_loadQuestions_btn" onclick="loadQuestions()">lade Fragen</Button>
+		<Button id="quiz_start_btn" onclick="startQuiz()">Quiz starten</Button>
+		<div id="play-area">
+		<h4 id="question-header"></h4>
+		<input type="radio" id="answerA" name="answers"/><Label id="answerALabel" for="answerA"></Label><br>
+		<input type="radio" id="answerB" name="answers"/><Label id="answerBLabel" for="answerB"></Label><br>
+		<input type="radio" id="answerC" name="answers"/><Label id="answerCLabel" for="answerC"></Label><br>
+		<input type="radio" id="answerD" name="answers"/><Label id="answerDLabel" for="answerD"></Label><br>
+		<Button id=checkAnswerBtn onclick="checkAnswer()">überprüfen</Button>
+		<Button id=nextQuestionBtn onclick="getNextQuestion()" visibility="hidden">nächste Frage</Button>
+		</div>
+	</div>
+</body>
+</html>
