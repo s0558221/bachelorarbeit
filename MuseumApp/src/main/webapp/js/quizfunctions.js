@@ -41,6 +41,44 @@ request.onerror = function() {
 request.send();
 }
 
+function getAllTopics() {
+	
+let dropdown = document.getElementById('topics-select');
+dropdown.length = 0;
+
+let defaultOption = document.createElement('option');
+defaultOption.text = 'Bitte Themenbereich wählen';
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+const url = 'rest/topic';
+
+const request = new XMLHttpRequest();
+request.open('GET', url, true);
+
+request.onload = function() {
+  if (request.status === 200) {
+    const data = JSON.parse(request.responseText);
+    let option;
+    for (let i = 0; i < data.length; i++) {
+      option = document.createElement('option');
+      option.text = data[i].text;
+      option.value = data[i].id;
+      dropdown.add(option);
+    }
+   } else {
+    // Reached the server, but it returned an error
+  }   
+}
+
+request.onerror = function() {
+  console.error('An error occurred fetching the JSON from ' + url);
+};
+
+request.send();
+}
+
 function getAnswersByQuestionID(questionId) {
 	
 var url = 'rest/answer/FindByQuestionId?';
@@ -98,46 +136,12 @@ request.onerror = function() {
 request.send();
 }
 
-function getAllTopics() {
-	
-	let dropdown = document.getElementById('topics-select');
-dropdown.length = 0;
-
-let defaultOption = document.createElement('option');
-defaultOption.text = 'Bitte Themenbereich wählen';
-
-dropdown.add(defaultOption);
-dropdown.selectedIndex = 0;
-
-const url = 'rest/topic';
-
-const request = new XMLHttpRequest();
-request.open('GET', url, true);
-
-request.onload = function() {
-  if (request.status === 200) {
-    const data = JSON.parse(request.responseText);
-    let option;
-    for (let i = 0; i < data.length; i++) {
-      option = document.createElement('option');
-      option.text = data[i].text;
-      option.value = data[i].id;
-      dropdown.add(option);
-    }
-   } else {
-    // Reached the server, but it returned an error
-  }   
-}
-
-request.onerror = function() {
-  console.error('An error occurred fetching the JSON from ' + url);
-};
-
-request.send();
-}
-
 function getQuestionsByDifficultyAndTopic(){
-const url = 'rest/question';
+var difficulty = document.getElementById('difficulties-select').value;
+var topic = document.getElementById('topics-select').value;
+
+var url = 'rest/question/FindByTopicIdAndDifficultyId?';
+url = url + "topicId=" + topic + "&difficultyId="+difficulty;
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -194,18 +198,20 @@ function checkAnswer(){
 		else
 		{
 			alert("Es wurden alle Fragen korrekt beantwortet. Das Spiel ist nun vorbei.")
-			document.getElementById("play-area").style.visibility="hidden";
-		 	var ele = document.getElementsByName("answers");
-   			for(var i=0;i<ele.length;i++)
-      		ele[i].checked = false;
+			gameEnd();
 		}
 	}
 	else
 	{
 		alert("falsche Antwort. Das Quiz ist nun vorbei.");
+		gameEnd();
+	}
+}
+
+function gameEnd()
+{
 		document.getElementById("play-area").style.visibility="hidden";
-		 var ele = document.getElementsByName("answers");
+		var ele = document.getElementsByName("answers");
    		for(var i=0;i<ele.length;i++)
       	ele[i].checked = false;
-	}
 }

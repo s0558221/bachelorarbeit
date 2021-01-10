@@ -18,7 +18,7 @@ public class QuestionWebService {
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<Question> getAllQuestions() {
-		initFrageDao();
+		initQuestionDao();
         return questionDao.getAllQuestions();
     }
 	
@@ -27,11 +27,20 @@ public class QuestionWebService {
     @Produces(MediaType.APPLICATION_JSON)
 	public Question getQuestionById(@QueryParam("id") String id)
 	{
-		initFrageDao();
+		initQuestionDao();
 		return questionDao.getQuestionById(id);
 	}
+	
+	@GET 
+	@Path("/FindByTopicIdAndDifficultyId")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Collection<Question> getQuestionByTopicIdAndDifficultyId(@QueryParam("topicId") String topicid,@QueryParam("difficultyId") String difficultyid)
+	{
+		initQuestionDao();
+		return questionDao.getQuestionsByTopicIdAndDifficultyId(topicid,difficultyid);
+	}
 
-	private void initFrageDao() 
+	private void initQuestionDao() 
 	{
 		questionDao = new QuestionDao();
         

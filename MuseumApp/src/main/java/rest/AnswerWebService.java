@@ -24,7 +24,7 @@ public class AnswerWebService {
 	@GET 
 	@Path("/FindByQuestionId")
     @Produces(MediaType.APPLICATION_JSON)
-	public Collection<Answer> getAnswerById(@QueryParam("questionid") int id)
+	public Collection<Answer> getAnswerByQuestionId(@QueryParam("questionid") int id)
 	{
 		initAnswerDao();
 		return answerDao.getAnswersByQuestionId(id);

@@ -18,6 +18,7 @@ public class QuestionDao {
 	
 	private static String GET_ALL_QUESTIONS = "select * from Quiz_Fragen";
 	private static String GET_QUESTION_BY_ID = "select * from Quiz_Fragen where id = ?";
+	private static String GET_QUESTION_BY_TOPICID_AND_DIFFICULTYID = "select * from Quiz_Fragen where Id_Themengebiet = ? AND Id_Schwierigkeit = ?";
 
 	 private  DataSource ds;
 	 
@@ -61,6 +62,57 @@ public class QuestionDao {
 	            System.out.println("SQLException getting contact");
 	            e.printStackTrace();
 	            return question;
+	        } finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (stmt != null) stmt.close();
+	                if (con != null) con.close();
+	            } catch (Exception e) {
+	                System.out.println("Exception in closing DB resources");
+	            } 
+	        }
+	        }
+	        else
+	        	return null;
+		}
+	 
+	 public Collection<Question> getQuestionsByTopicIdAndDifficultyId(String topicid, String difficultyid) {
+		 Collection<Question> questions = new ArrayList<Question>();
+			
+			int tid = -1;
+			if(!topicid.equals("") )
+			tid = Integer.parseInt(topicid);
+			
+			int did = -1;
+			if(!difficultyid.equals("") )
+			did = Integer.parseInt(difficultyid);
+			
+			Connection con = null;
+	        PreparedStatement stmt = null;
+	        ResultSet rs = null;
+	        if(tid!=-1&&did!=-1)
+	        {
+	        try {
+	            con = ds.getConnection();
+	            stmt = con.prepareStatement(GET_QUESTION_BY_TOPICID_AND_DIFFICULTYID);
+	            stmt.setInt(1, tid);
+	            stmt.setInt(2, did);
+	            rs = stmt.executeQuery();
+	            
+	            while (rs.next()) {
+	            	Question question = new Question();
+	            	question.setId(rs.getInt(1));
+	            	question.setText(rs.getString(2));
+	            	question.setDifficulty(rs.getInt(3));
+	            	question.setTopic(rs.getInt(4));
+	            	questions.add(question);
+	            }
+	            
+	            return questions;
+	        } catch (SQLException e) {
+	            System.out.println("SQLException getting contact");
+	            e.printStackTrace();
+	            return questions;
 	        } finally {
 	            try {
 	                if (rs != null) rs.close();
