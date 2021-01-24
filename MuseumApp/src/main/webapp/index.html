@@ -3,57 +3,15 @@
 <head>
     	<link rel="stylesheet" type="text/css" href="./css/styles.css" />
 	    <script src="js/quizfunctions.js"></script>
-	    <script src="js/uploadfunctions.js"></script>
 	   	<meta charset="UTF-8" />
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
+</head>
 <body>
-    <div id="quiz">
-    <h2>Quiz</h2>
-    	<Label for="difficulties-select">Schwierigkeitsgrad</Label>
-    	<select name="difficulties" id="difficulties-select" >
-		</select>
-		<script>
-			getAllDifficulties()
-		</script><br>
-		<Label for="topics-select">Thema</Label>
-		<select name="topics" id="topics-select">
-		</select>
-		<script>
-			getAllTopics()
-		</script><br>
-		<Button id="quiz_loadQuestions_btn" onclick="loadQuestions()">lade Fragen</Button>
-		<Button id="quiz_start_btn" onclick="startQuiz()">Quiz starten</Button>
-		<div id="play-area">
-		<h4 id="question-header"></h4>
-		<input type="radio" id="answerA" name="answers"/><Label id="answerALabel" for="answerA"></Label><br>
-		<input type="radio" id="answerB" name="answers"/><Label id="answerBLabel" for="answerB"></Label><br>
-		<input type="radio" id="answerC" name="answers"/><Label id="answerCLabel" for="answerC"></Label><br>
-		<input type="radio" id="answerD" name="answers"/><Label id="answerDLabel" for="answerD"></Label><br>
-		<Button id=checkAnswerBtn onclick="checkAnswer()">überprüfen</Button>
-		<Button id=nextQuestionBtn onclick="getNextQuestion()">nächste Frage</Button>
-		</div>
-	</div>
-	<br>
-	<div id="verwaltung">
-		<h2>Administration</h2>
-		<div id="upload">
-			<h3>Datei-Upload</h3>
-			<form action="rest/upload/pdf" method="post" enctype="multipart/form-data">
-            	<p>Select a file : <input type="file" name="file" size="45" accept=".pdf" /></p>
-            	<input type="submit" value="Upload PDF" />
-             
-        	</form>
-		</div>
-		<div id="quizsettings">
-			<h3>Einstellungen für das Quiz</h3>
-				<div id="createTopic">
-					<h3>Themengebiete erstellen</h3>
-				</div>
-				<div id="createQuestion">
-					<h3>Fragen erstellen</h3>
-				</div>
-		</div>
-	</div>
+	<nav>
+		<a href="index.html">Startseite</a>
+      	<a href="html/qr.html">Erkundung</a>
+      	<a href="html/quiz.html">Quiz</a>
+	</nav>
+	<footer><a href="html/admin.html">Intern</a></footer>
 </body>
 </html>

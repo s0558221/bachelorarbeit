@@ -61,6 +61,21 @@
     		<artifactId>postgresql</artifactId>
     		<version>42.2.2</version>
     	</dependency>
+        <dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.11.1</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.google.zxing</groupId>
+    		<artifactId>core</artifactId>
+    		<version>3.3.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.google.zxing</groupId>
+    		<artifactId>javase</artifactId>
+    		<version>3.3.0</version>
+		</dependency>
     </dependencies>
     <properties>
         <jersey.version>3.0.0</jersey.version>

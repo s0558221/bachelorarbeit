@@ -17,6 +17,7 @@ import bean.Topic;
 public class TopicDao {
 	private static String GET_ALL_TOPICS = "select * from Quiz_Lookup_Themengebiete";
 	private static String GET_TOPIC_BY_ID = "select * from Quiz_Lookup_Themengebiete where id = ?";
+	private static String ADD_TOPIC = "INSERT INTO Quiz_Lookup_Themengebiete (Themengebiet) VALUES (?)";
 
 	 private  DataSource ds;
 	 
@@ -95,6 +96,31 @@ public class TopicDao {
 	            System.out.println("SQLException getting contact");
 	            e.printStackTrace();
 	            return topics;
+	        } finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (stmt != null) stmt.close();
+	                if (con != null) con.close();
+	            } catch (Exception e) {
+	                System.out.println("Exception in closing DB resources");
+	            } 
+	        }
+		}
+	 
+	 public void addTopic(Topic t) {
+		 	Connection con = null;
+	        PreparedStatement stmt = null;
+	        ResultSet rs = null;
+
+	        try {
+	            con = ds.getConnection();
+	            stmt = con.prepareStatement(ADD_TOPIC);
+	            stmt.setString(1, t.getText());
+	            stmt.executeUpdate();
+	            
+	        }catch (SQLException e) {
+	            System.out.println("SQLException getting contact");
+	            e.printStackTrace();
 	        } finally {
 	            try {
 	                if (rs != null) rs.close();

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+	    <!--<script src="../js/quizfunctions.js"></script>-->
+	    <script src="../js/adminfunctions.js"></script>
+	   	<meta charset="UTF-8" />
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<nav>
+		<a href="../index.html">Startseite</a>
+      	<a href="qr.html">Erkundung</a>
+      	<a href="quiz.html">Quiz</a>
+	</nav>
+	<h2>Administration</h2>
+		<div id="upload">
+			<h3>Datei-Upload</h3>
+			<form action="rest/upload/pdf" method="post" enctype="multipart/form-data">
+            	<p>Select a file : <input type="file" name="file" size="45" accept=".pdf" /></p>
+            	<input type="submit" value="Upload PDF" />
+        	</form>
+		</div>
+		<div id="quizsettings">
+			<h3>Einstellungen für das Quiz</h3>
+				<div id="createTopic">
+					<h3>Themengebiete erstellen</h3>
+					<Label for="topics-select">vorhandene Themen: </Label>
+					<select name="topics" id="topics-existing">
+					</select>
+					<script>
+						getAllTopics("topics-existing")
+					</script><br>
+					<label for="newTopic">neues Thema:
+    					<input type="text" id="newTopic" name="newTopic">
+  					</label>
+  					<Button id=createTopicBtn onclick="addTopic()">erstellen</Button>
+				</div>
+				<div id="createQuestion">
+					<h3>Fragen erstellen</h3>
+				</div>
+		</div>
+		<div id="qrcodeerstellen">
+			<h3>QR-Codes erstellen</h3>
+				<label for="linkText">Link zur Homepage:
+    				<input type="text" id="linkText" name="linkText">
+  				</label>
+  					<Button id=createQRCodeBtn onclick="createQRCode()">erstellen</Button>
+				</div>
+		<footer><a href="admin.html">Intern</a></footer>
+</body>
+</html>

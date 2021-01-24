@@ -14,7 +14,7 @@ defaultOption.text = 'Bitte Schwierigkeit wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = 'rest/difficulty';
+const url = '../rest/difficulty';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -41,9 +41,9 @@ request.onerror = function() {
 request.send();
 }
 
-function getAllTopics() {
-	
-let dropdown = document.getElementById('topics-select');
+function getAllTopics(optionName) {
+
+let dropdown = document.getElementById(optionName);
 dropdown.length = 0;
 
 let defaultOption = document.createElement('option');
@@ -52,7 +52,7 @@ defaultOption.text = 'Bitte Themenbereich wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = 'rest/topic';
+const url = '../rest/topic';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -81,7 +81,7 @@ request.send();
 
 function getAnswersByQuestionID(questionId) {
 	
-var url = 'rest/answer/FindByQuestionId?';
+var url = '../rest/answer/FindByQuestionId?';
 url = url + "questionid=" + questionId;
 
 const request = new XMLHttpRequest();
@@ -140,7 +140,7 @@ function getQuestionsByDifficultyAndTopic(){
 var difficulty = document.getElementById('difficulties-select').value;
 var topic = document.getElementById('topics-select').value;
 
-var url = 'rest/question/FindByTopicIdAndDifficultyId?';
+var url = '../rest/question/FindByTopicIdAndDifficultyId?';
 url = url + "topicId=" + topic + "&difficultyId="+difficulty;
 
 const request = new XMLHttpRequest();
@@ -215,3 +215,4 @@ function gameEnd()
    		for(var i=0;i<ele.length;i++)
       	ele[i].checked = false;
 }
+
