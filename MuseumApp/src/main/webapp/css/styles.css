@@ -1,7 +1,38 @@
-#play-area {
-  visibility: hidden;
+
+.container{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
 }
 
-#nextQuestionBtn{
-	visibility: hidden;
+.menubutton{
+	background-color: #e1e6e5;
+  	color: green;
+  	padding: 14px 25px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+}
+
+header{
+	text-align: center;
+	color:green;
+	padding-bottom:50px;
+}
+
+footer{
+	padding:50px;
+	text-align:center;
+}
+
+#qrcode {
+  	width:100px;
+  	height:100px;
+  	margin-top:15px;
+}
+
+.idBoxes
+{
+	visibility:hidden;
 }

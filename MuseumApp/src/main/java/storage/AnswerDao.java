@@ -17,7 +17,9 @@ import bean.Answer;
 public class AnswerDao {
 	private static String GET_ALL_ANSWERS = "select * from Quiz_Antworten";
 	private static String GET_ANSWER_BY_QUESTION_ID = "select * from Quiz_Antworten where Id_Frage = ?";
-
+	private static String ADD_ANSWER = "INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig)VALUES(?,?,?)";
+	private static String UPDATE_ANSWER = "UPDATE Quiz_Antworten SET Antwort = ?,Id_Frage = ?,IstRichtig = ? WHERE Id = ?";
+	
 	 private  DataSource ds;
 	 
 	 public AnswerDao () {      
@@ -92,6 +94,57 @@ public class AnswerDao {
 	            System.out.println("SQLException getting contact");
 	            e.printStackTrace();
 	            return answers;
+	        } finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (stmt != null) stmt.close();
+	                if (con != null) con.close();
+	            } catch (Exception e) {
+	                System.out.println("Exception in closing DB resources");
+	            } 
+	        }
+		}
+	 
+	 public void addAnswer(Answer a) {
+		 	Connection con = null;
+	        PreparedStatement stmt = null;
+	        ResultSet rs = null;
+	        try {
+	            con = ds.getConnection();
+	            stmt = con.prepareStatement(ADD_ANSWER);
+	            stmt.setString(1, a.getText());
+	            stmt.setInt(2, a.getId_frage());
+	            stmt.setBoolean(3, a.getIsCorrect());
+	            stmt.executeUpdate();
+	        }catch (SQLException e) {
+	            System.out.println("SQLException getting question");
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (stmt != null) stmt.close();
+	                if (con != null) con.close();
+	            } catch (Exception e) {
+	                System.out.println("Exception in closing DB resources");
+	            } 
+	        }
+		}
+	 
+	 public void updateAnswer(Answer a) {
+		 	Connection con = null;
+	        PreparedStatement stmt = null;
+	        ResultSet rs = null;
+	        try {
+	            con = ds.getConnection();
+	            stmt = con.prepareStatement(UPDATE_ANSWER);
+	            stmt.setString(1,a.getText());
+	            stmt.setInt(2, a.getId_frage());
+	            stmt.setBoolean(3, a.getIsCorrect());
+	            stmt.setInt(4, a.getId());
+	            stmt.executeUpdate();
+	        }catch (SQLException e) {
+	            System.out.println("SQLException getting question");
+	            e.printStackTrace();
 	        } finally {
 	            try {
 	                if (rs != null) rs.close();

@@ -4,25 +4,34 @@
     	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
 	    <!--<script src="../js/quizfunctions.js"></script>-->
 	    <script src="../js/adminfunctions.js"></script>
+	    <script src="../js/qrcode.min.js"></script>
 	   	<meta charset="UTF-8" />
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<nav>
-		<a href="../index.html">Startseite</a>
-      	<a href="qr.html">Erkundung</a>
-      	<a href="quiz.html">Quiz</a>
-	</nav>
-	<h2>Administration</h2>
+	<div>
+		<a href="../index.html" class="button">Zurück</a><br>
+	</div>
+	<h1>Administration</h1>
+		<h2>Ausstellung</h2>
 		<div id="upload">
 			<h3>Datei-Upload</h3>
-			<form action="rest/upload/pdf" method="post" enctype="multipart/form-data">
-            	<p>Select a file : <input type="file" name="file" size="45" accept=".pdf" /></p>
-            	<input type="submit" value="Upload PDF" />
+			<form action="../rest/upload/file" method="post" enctype="multipart/form-data">
+            	<input type="file" name="file" id="file" size="45" accept=".pdf,.jpg,.png,.bmp,.mp4" /><br>
+        		<Button onclick="uploadFile()">Datei hochladen</Button>
         	</form>
 		</div>
+		<div id="qrcodeerstellen">
+			<h3>QR-Codes erstellen</h3>
+				<label for="linkText">Link zur Homepage:
+    				<input type="text" id="linkText" name="linkText">
+  				</label><br>
+  				<div id="qrcode"></div>
+  				<Button onclick="createQRCode()">QR-Code erstellen</Button>
+  				<Button onclick="clearQRCode()">Zurücksetzen</Button><br>
+		</div>
 		<div id="quizsettings">
-			<h3>Einstellungen für das Quiz</h3>
+			<h2>Quiz</h2>
 				<div id="createTopic">
 					<h3>Themengebiete erstellen</h3>
 					<Label for="topics-select">vorhandene Themen: </Label>
@@ -37,16 +46,53 @@
   					<Button id=createTopicBtn onclick="addTopic()">erstellen</Button>
 				</div>
 				<div id="createQuestion">
-					<h3>Fragen erstellen</h3>
+					<h3>Fragen erstellen bzw. bearbeiten</h3>
+					<Label for="questions-existing">vorhandene Fragen: </Label>
+					<select name="questions" id="questions-existing" onchange="questionSelect()">
+					</select>
+					<script>
+						getAllQuestions("questions-existing")
+					</script>
+					<Button id="newQuestion" name="newQuestion" onclick="createNewQuestion()">neue Frage erstellen</Button>
+  					<h4>Frage</h4>
+  					<label for="actualQuestion">Fragentext</label>
+  					<input type="text" id="actualQuestion" name="actualQuestion">
+  					<input type="text" id="questionId" class="idBoxes"><br>
+  					<label for="questionTopics">Themengebiet</label>
+  					<select name="questionTopic" id="questionTopic">
+					</select>
+					<script>
+						getAllTopics("questionTopic")
+					</script><br>
+  					<label for="questionDifficulty">Schwierigkeitsgrad</label>
+  					<select name="questionDifficulty" id="questionDifficulty">
+					</select>
+					<script>
+						getAllDifficulties("questionDifficulty")
+					</script><br>
+					<h4>Antworten</h4>
+					<label for="answerA">Antwort A</label>
+  					<input type="text" id="answerA" name="answerA">
+  					<input type="checkbox" id="answerAcorrect" name="answerAcorrect">
+  					<label for="answerAcorrect">richtige Antwort</label>
+  					<input type="text" id="answerAid" name="answerAid" class="idBoxes"><br>
+  					<label for="answerB">Antwort B</label>
+  					<input type="text" id="answerB" name="answerB">
+  					<input type="checkbox" id="answerBcorrect" name="answerBcorrect">
+  					<label for="answerBcorrect">richtige Antwort</label>
+  					<input type="text" id="answerBid" name="answerBid" class="idBoxes"><br>
+  					<label for="answerC">Antwort C</label>
+  					<input type="text" id="answerC" name="answerC">
+  					<input type="checkbox" id="answerCcorrect" name="answerCcorrect">
+  					<label for="answerCcorrect">richtige Antwort</label>
+  					<input type="text" id="answerCid" name="answerCid" class="idBoxes"><br>
+  					<label for="answerD">Antwort D</label>
+  					<input type="text" id="answerD" name="answerD">
+  					<input type="checkbox" id="answerDcorrect" name="answerDcorrect">
+  					<label for="answerDcorrect">richtige Antwort</label>
+  					<input type="text" id="answerDid" name="answerDid" class="idBoxes"><br>
+  					<Button id="saveQuestionBtn" onclick="saveQuestion()">Speichern</Button>
 				</div>
 		</div>
-		<div id="qrcodeerstellen">
-			<h3>QR-Codes erstellen</h3>
-				<label for="linkText">Link zur Homepage:
-    				<input type="text" id="linkText" name="linkText">
-  				</label>
-  					<Button id=createQRCodeBtn onclick="createQRCode()">erstellen</Button>
-				</div>
-		<footer><a href="admin.html">Intern</a></footer>
 </body>
 </html>

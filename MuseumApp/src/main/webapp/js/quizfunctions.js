@@ -3,6 +3,33 @@ var questionIndex = 0;
 var actualQuestion=[];
 var answers=[];
 
+window.onload = function() {
+	document.getElementById("topics-select").style.visibility="hidden";
+	document.getElementById("topics-label").style.visibility="hidden";
+	document.getElementById("quiz_start_btn").style.visibility="hidden";
+	document.getElementById("finishQuizBtn").style.visibility="hidden";
+	document.getElementById("play-area").style.visibility="hidden";
+	document.getElementById("nextQuestionBtn").style.visibility="hidden";
+};
+
+function difficultSelect(){
+	var difficulty = document.getElementById('difficulties-select').value;
+	if(difficulty != null)
+	{
+		document.getElementById("topics-select").style.visibility="visible";
+		document.getElementById("topics-label").style.visibility="visible";
+	}
+}
+
+function topicSelect(){
+	var topic = document.getElementById('topics-select').value;
+	if(topic != null)
+	{
+			getQuestionsByDifficultyAndTopic();
+			document.getElementById("quiz_start_btn").style.visibility="visible";
+	}
+}
+
 function getAllDifficulties() {
 	
 let dropdown = document.getElementById('difficulties-select');
@@ -29,9 +56,7 @@ request.onload = function() {
       option.value = data[i].id;
       dropdown.add(option);
     }
-   } else {
-    // Reached the server, but it returned an error
-  }   
+   }
 }
 
 request.onerror = function() {
@@ -41,9 +66,10 @@ request.onerror = function() {
 request.send();
 }
 
-function getAllTopics(optionName) {
 
-let dropdown = document.getElementById(optionName);
+function getAllTopics() {
+
+let dropdown = document.getElementById('topics-select');
 dropdown.length = 0;
 
 let defaultOption = document.createElement('option');
@@ -67,9 +93,7 @@ request.onload = function() {
       option.value = data[i].id;
       dropdown.add(option);
     }
-   } else {
-    // Reached the server, but it returned an error
-  }   
+   } 
 }
 
 request.onerror = function() {
@@ -149,9 +173,7 @@ request.open('GET', url, true);
 request.onload = function() {
   if (request.status === 200) {
     questions = JSON.parse(request.responseText);
-   } else {
-    // Reached the server, but it returned an error
-  }   
+   }  
 }
 
 request.onerror = function() {
@@ -161,56 +183,89 @@ request.onerror = function() {
 request.send();
 }
 
-function loadQuestions(){
-	getQuestionsByDifficultyAndTopic();
+function startQuiz(){
+	if(questions.length>0)
+	{
+		document.getElementById("noQuestionsLabel").innerHTML ="";
+		questionIndex =0;
+		actualQuestion = questions[questionIndex];
+		displayQuestion();
+	}
+	else
+	{
+		document.getElementById("noQuestionsLabel").innerHTML ="keine Fragen vorhanden! Bitte anderes Themengebiet wählen! ";
+	}
 }
 
-function startQuiz(){
-	questionIndex =0;
-	actualQuestion = questions[questionIndex];
-	displayNextQuestion();
-	getAnswersByQuestionID(actualQuestion.id)
+function displayQuestion(){
+	let h4 = document.getElementById('question-header');
+	h4.innerText = actualQuestion.text;
+	getAnswersByQuestionID(actualQuestion.id);
 	document.getElementById("play-area").style.visibility="visible";
 }
 
 function getNextQuestion(){
+	document.getElementById("answerLabel").innerHTML ='';
+	
+	var ele = document.getElementsByName("answers");
+   		for(var i=0;i<ele.length;i++)
+      	ele[i].checked = false;
+	
 	questionIndex++;
 	actualQuestion = questions[questionIndex];
-	displayNextQuestion();
-	getAnswersByQuestionID(actualQuestion.id);
+	displayQuestion();
 	document.getElementById("nextQuestionBtn").style.visibility="hidden";
-}
-
-function displayNextQuestion(){
-	let h4 = document.getElementById('question-header');
-	h4.innerText = actualQuestion.text;
+	document.getElementById("checkAnswerBtn").style.visibility="visible";
 }
 
 function checkAnswer(){
-	var answer = document.querySelector('input[name = "answers"]:checked').value;
+	var selectedAnswer = document.querySelector('input[name = "answers"]:checked');
+	var answer = selectedAnswer.value;
+	var korrekt = "";
+	
 	if(answer=='true')
-	{	
-		alert("Korrekte Antwort");
+	{
+		document.getElementById("answerLabel").style.color ='green';
+		korrekt="Diese Antwort ist korrekt.";
 		if(questionIndex<questions.length-1)
 		{
+			korrekt+="Weiter zur nächsen Frage.";
 			document.getElementById("nextQuestionBtn").style.visibility="visible";
+			document.getElementById("checkAnswerBtn").style.visibility="hidden";
 		}
 		else
 		{
-			alert("Es wurden alle Fragen korrekt beantwortet. Das Spiel ist nun vorbei.")
-			gameEnd();
+			korrekt+=" Herzlichen Glückwunsch. Es wurden alle Fragen erfolgreich beantwortet.";
+			document.getElementById("checkAnswerBtn").style.visibility="hidden";
+			document.getElementById("finishQuizBtn").style.visibility="visible";
 		}
 	}
 	else
 	{
-		alert("falsche Antwort. Das Quiz ist nun vorbei.");
-		gameEnd();
+		document.getElementById("answerLabel").style.color ='red';
+		korrekt="Diese Antwort ist falsch. Das Spiel ist nun vorbei.";
+		document.getElementById("checkAnswerBtn").style.visibility="hidden";
+		document.getElementById("finishQuizBtn").style.visibility="visible";
 	}
+	document.getElementById("answerLabel").innerHTML =korrekt;
 }
 
-function gameEnd()
+function endQuiz()
 {
+		document.getElementById("finishQuizBtn").style.visibility="hidden";
+		document.getElementById("answerLabel").innerHTML ='';
 		document.getElementById("play-area").style.visibility="hidden";
+		
+		document.getElementById("topics-select").style.visibility="hidden";
+		document.getElementById("topics-label").style.visibility="hidden";
+		document.getElementById("quiz_start_btn").style.visibility="hidden";
+		
+		let difficultiesdropdown = document.getElementById("difficulties-select");
+		difficultiesdropdown.selectedIndex = 0;
+		
+		let topicsdropdown = document.getElementById("topics-select");
+		topicsdropdown.selectedIndex = 0;
+		
 		var ele = document.getElementsByName("answers");
    		for(var i=0;i<ele.length;i++)
       	ele[i].checked = false;

@@ -26,6 +26,20 @@ CREATE TABLE IF NOT EXISTS Quiz_Antworten(
       REFERENCES Quiz_Fragen (Id)
 	);
 	
-GRANT SELECT, INSERT, DELETE
+CREATE TABLE IF NOT EXISTS Ausstellung_Item(
+	Id SERIAL PRIMARY KEY,
+	Name TEXT NOT NULL
+	);
+	
+CREATE TABLE IF NOT EXISTS Ausstellung_ItemToMedia(
+	Id SERIAL PRIMARY KEY,
+	Id_Item INTEGER NOT NULL,
+	Dateiname TEXT NOT NULL,
+	FOREIGN KEY (Id_Item)
+      REFERENCES Ausstellung_Item (Id)
+	);
+	
+	
+GRANT SELECT, INSERT, DELETE, UPDATE
 ON TABLE Quiz_Lookup_Schwierigkeiten, Quiz_Lookup_Themengebiete, Quiz_Fragen, Quiz_Antworten  TO _s0558221__museum_app_db_generic;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO _s0558221__museum_app_db_generic;

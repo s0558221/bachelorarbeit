@@ -7,37 +7,36 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<nav>
-		<a href="../index.html">Startseite</a>
-      	<a href="qr.html">Erkundung</a>
-      	<a href="quiz.html">Quiz</a>
-	</nav>
-	<div id="quiz">
+	<div>
+		<a href="../index.html" class="button">Zurück</a><br>
+	</div>
+	<div id="quiz" class="container">
     <h2>Quiz</h2>
     	<Label for="difficulties-select">Schwierigkeitsgrad</Label>
-    	<select name="difficulties" id="difficulties-select" >
+    	<select name="difficulties" id="difficulties-select" onchange="difficultSelect()">
 		</select>
 		<script>
 			getAllDifficulties()
 		</script><br>
-		<Label for="topics-select">Thema</Label>
-		<select name="topics" id="topics-select">
+		<Label for="topics-select" id="topics-label">Thema</Label>
+		<select name="topics" id="topics-select" onchange="topicSelect()">
 		</select>
 		<script>
-			getAllTopics("topics-select")
+			getAllTopics()
 		</script><br>
-		<Button id="quiz_loadQuestions_btn" onclick="loadQuestions()">lade Fragen</Button>
-		<Button id="quiz_start_btn" onclick="startQuiz()">Quiz starten</Button>
+		<Button id="quiz_start_btn" onclick="startQuiz()">Quiz starten</Button><br>
+		<label id="noQuestionsLabel"></label><br>
 		<div id="play-area">
 		<h4 id="question-header"></h4>
 		<input type="radio" id="answerA" name="answers"/><Label id="answerALabel" for="answerA"></Label><br>
 		<input type="radio" id="answerB" name="answers"/><Label id="answerBLabel" for="answerB"></Label><br>
 		<input type="radio" id="answerC" name="answers"/><Label id="answerCLabel" for="answerC"></Label><br>
 		<input type="radio" id="answerD" name="answers"/><Label id="answerDLabel" for="answerD"></Label><br>
+		<label id="answerLabel"></label><br>
 		<Button id=checkAnswerBtn onclick="checkAnswer()">überprüfen</Button>
 		<Button id=nextQuestionBtn onclick="getNextQuestion()">nächste Frage</Button>
+		<Button id=finishQuizBtn onclick="endQuiz()">Beenden</Button>
 		</div>
 	</div>
-	<footer><a href="admin.html">Intern</a></footer>
 </body>
 </html>

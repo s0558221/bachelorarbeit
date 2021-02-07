@@ -19,7 +19,7 @@ import jakarta.ws.rs.core.Response;
 public class UploadWebService {
 	
 	@POST
-	@Path("/pdf")
+	@Path("/file")
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
 	                                @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
@@ -40,9 +40,9 @@ public class UploadWebService {
 	        out.close();
 	    } catch (IOException e) 
 	    {
-	        throw new WebApplicationException("Error while uploading file. Please try again !!");
+	        throw new WebApplicationException("Fehler beim Upload!! Bitte nochmal versuchen!!");
 	    }
-	    return Response.ok("Data uploaded successfully !!").build();
+	    return Response.ok("Datei-Upload erfolgreich!!").build();
 	}
 
 }
