@@ -7,9 +7,9 @@ window.onload = function() {
 	document.getElementById("topics-select").style.visibility="hidden";
 	document.getElementById("topics-label").style.visibility="hidden";
 	document.getElementById("quiz_start_btn").style.visibility="hidden";
-	document.getElementById("finishQuizBtn").style.visibility="hidden";
+	document.getElementById("finishQuizBtn").disabled=true;
 	document.getElementById("play-area").style.visibility="hidden";
-	document.getElementById("nextQuestionBtn").style.visibility="hidden";
+	document.getElementById("nextQuestionBtn").disabled=true;
 };
 
 function difficultSelect(){
@@ -202,6 +202,7 @@ function displayQuestion(){
 	h4.innerText = actualQuestion.text;
 	getAnswersByQuestionID(actualQuestion.id);
 	document.getElementById("play-area").style.visibility="visible";
+	document.getElementById("checkAnswerBtn").disabled = false;
 }
 
 function getNextQuestion(){
@@ -214,14 +215,15 @@ function getNextQuestion(){
 	questionIndex++;
 	actualQuestion = questions[questionIndex];
 	displayQuestion();
-	document.getElementById("nextQuestionBtn").style.visibility="hidden";
-	document.getElementById("checkAnswerBtn").style.visibility="visible";
+	document.getElementById("nextQuestionBtn").disabled=true;
 }
 
 function checkAnswer(){
 	var selectedAnswer = document.querySelector('input[name = "answers"]:checked');
 	var answer = selectedAnswer.value;
 	var korrekt = "";
+	
+	document.getElementById("checkAnswerBtn").disabled=true;
 	
 	if(answer=='true')
 	{
@@ -230,32 +232,27 @@ function checkAnswer(){
 		if(questionIndex<questions.length-1)
 		{
 			korrekt+="Weiter zur nächsen Frage.";
-			document.getElementById("nextQuestionBtn").style.visibility="visible";
-			document.getElementById("checkAnswerBtn").style.visibility="hidden";
+			document.getElementById("nextQuestionBtn").disabled=false;
 		}
 		else
 		{
 			korrekt+=" Herzlichen Glückwunsch. Es wurden alle Fragen erfolgreich beantwortet.";
-			document.getElementById("checkAnswerBtn").style.visibility="hidden";
-			document.getElementById("finishQuizBtn").style.visibility="visible";
+			document.getElementById("finishQuizBtn").disabled=false;
 		}
 	}
 	else
 	{
 		document.getElementById("answerLabel").style.color ='red';
 		korrekt="Diese Antwort ist falsch. Das Spiel ist nun vorbei.";
-		document.getElementById("checkAnswerBtn").style.visibility="hidden";
-		document.getElementById("finishQuizBtn").style.visibility="visible";
+		document.getElementById("finishQuizBtn").disabled=false;
 	}
 	document.getElementById("answerLabel").innerHTML =korrekt;
 }
 
 function endQuiz()
 {
-		document.getElementById("finishQuizBtn").style.visibility="hidden";
 		document.getElementById("answerLabel").innerHTML ='';
-		document.getElementById("play-area").style.visibility="hidden";
-		
+		document.getElementById("finishQuizBtn").disabled=true;
 		document.getElementById("topics-select").style.visibility="hidden";
 		document.getElementById("topics-label").style.visibility="hidden";
 		document.getElementById("quiz_start_btn").style.visibility="hidden";
@@ -269,5 +266,7 @@ function endQuiz()
 		var ele = document.getElementsByName("answers");
    		for(var i=0;i<ele.length;i++)
       	ele[i].checked = false;
+      	
+      	document.getElementById("play-area").style.visibility="hidden";
 }
 

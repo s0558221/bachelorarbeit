@@ -4,14 +4,15 @@
     	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
 	    <script src="../js/quizfunctions.js"></script>
 	   	<meta charset="UTF-8" />
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<a href="../index.html" class="button">Zurück</a><br>
-	</div>
-	<div id="quiz" class="container">
-    <h2>Quiz</h2>
+	<div id="quiz">
+	<a href="../index.html" class="button">Zurück</a><br>
+    <header>
+    	<h1>das Museumsquiz</h1>
+    </header>
+    	<div id="quizsettings">
     	<Label for="difficulties-select">Schwierigkeitsgrad</Label>
     	<select name="difficulties" id="difficulties-select" onchange="difficultSelect()">
 		</select>
@@ -24,18 +25,19 @@
 		<script>
 			getAllTopics()
 		</script><br>
-		<Button id="quiz_start_btn" onclick="startQuiz()">Quiz starten</Button><br>
+		</div>
+		<Button id="quiz_start_btn" onclick="startQuiz()" class="quizbuttons">Quiz starten</Button><br>
 		<label id="noQuestionsLabel"></label><br>
 		<div id="play-area">
 		<h4 id="question-header"></h4>
-		<input type="radio" id="answerA" name="answers"/><Label id="answerALabel" for="answerA"></Label><br>
-		<input type="radio" id="answerB" name="answers"/><Label id="answerBLabel" for="answerB"></Label><br>
-		<input type="radio" id="answerC" name="answers"/><Label id="answerCLabel" for="answerC"></Label><br>
-		<input type="radio" id="answerD" name="answers"/><Label id="answerDLabel" for="answerD"></Label><br>
+		<input type="radio" id="answerA" name="answers"/><Label id="answerALabel" for="answerA" class="quizanswers"></Label><br>
+		<input type="radio" id="answerB" name="answers"/><Label id="answerBLabel" for="answerB" class="quizanswers"></Label><br>
+		<input type="radio" id="answerC" name="answers"/><Label id="answerCLabel" for="answerC" class="quizanswers"></Label><br>
+		<input type="radio" id="answerD" name="answers"/><Label id="answerDLabel" for="answerD" class="quizanswers"></Label><br>
 		<label id="answerLabel"></label><br>
-		<Button id=checkAnswerBtn onclick="checkAnswer()">überprüfen</Button>
-		<Button id=nextQuestionBtn onclick="getNextQuestion()">nächste Frage</Button>
-		<Button id=finishQuizBtn onclick="endQuiz()">Beenden</Button>
+		<Button id=checkAnswerBtn onclick="checkAnswer()" class="quizbuttons">überprüfen</Button>
+		<Button id=nextQuestionBtn onclick="getNextQuestion()" class="quizbuttons">nächste Frage</Button>
+		<Button id=finishQuizBtn onclick="endQuiz()" class="quizbuttons">Beenden</Button>
 		</div>
 	</div>
 </body>

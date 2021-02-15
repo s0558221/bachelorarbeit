@@ -1,11 +1,3 @@
-
-.container{
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-}
-
 .menubutton{
 	background-color: #e1e6e5;
   	color: green;
@@ -13,17 +5,13 @@
   	text-align: center;
   	text-decoration: none;
   	display: inline-block;
+  	width:300px;
+  	font-size:3em; 
 }
 
 header{
-	text-align: center;
 	color:green;
-	padding-bottom:50px;
-}
-
-footer{
-	padding:50px;
-	text-align:center;
+	font-size:1.5em;
 }
 
 #qrcode {
@@ -35,4 +23,44 @@ footer{
 .idBoxes
 {
 	visibility:hidden;
+}
+
+#mainmenu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#quizsettings label{
+	width:300px;
+	display:inline-block;
+	font-size:1.5em;
+	margin-bottom:15px;
+}
+
+#quizsettings select{
+	width:450px;
+	display:inline-block;
+	font-size:1.5em;
+	margin-bottom:15px;
+}
+
+.quizbuttons{
+	background-color: #e1e6e5;
+  	color: green;
+  	padding: 14px 25px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	width:300px;
+  	font-size:2em; 
+}
+
+.quizanswers{
+	font-size:1.5em;
+}
+
+#question-header, #answerLabel, #noQuestionsLabel{
+	font-size:1.5em;
 }

@@ -10,22 +10,72 @@
 	<div>
 		<a href="../index.html" class="button">Zurück</a><br>
 	</div>
+	<div id="erkundung" class="container">
+	<h2>interaktiver Museumsbesuch</h2>
+	<section>
+		<h3>Erklärung:</h3>
+		Nutzen Sie die Möglichkeit, mit Hilfe Ihrer Smartphone-Kamera, weitere Infos zu den Ausstellungsstücken zu erhalten.
+	</section>
 	<video id="preview"></video>
-	<script>
-	let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-    scanner.addListener('scan', function (content) {
-      console.log(content);
-    });
-    Instascan.Camera.getCameras().then(function (cameras) {
-      if (cameras.length > 0) {
-        scanner.start(cameras[0]);
-      } else {
-        console.error('No cameras found.');
-      }
-    }).catch(function (e) {
-      console.error(e);
-    });
-    </script>
-	<footer><a href="admin.html">Intern</a></footer>
+	<script type="text/javascript">
+	   	var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+	    scanner.addListener('scan',function(content){
+	        window.location.href=content;
+	    });
+	    Instascan.Camera.getCameras().then(function (cameras){
+	        if(cameras.length>0){
+	            scanner.start(cameras[0]);
+	            $('[name="options"]').on('change',function(){
+	                if($(this).val()==1){
+	                    if(cameras[0]!=""){
+	                        scanner.start(cameras[0]);
+	                    }else{
+	                        alert('keine Frontkamera vorhanden!');
+	                    }
+	                }else if($(this).val()==2){
+	                    if(cameras[1]!=""){
+	                        scanner.start(cameras[1]);
+	                    }else{
+	                        alert('keine Hauptkamera vorhanden!');
+	                    }
+	                }else if($(this).val()==3){
+	                    if(cameras[2]!=""){
+	                        scanner.start(cameras[2]);
+	                    }else{
+	                        alert('keine Hauptkamera vorhanden!');
+	                    }
+	                }
+	                else if($(this).val()==4){
+	                    if(cameras[3]!=""){
+	                        scanner.start(cameras[3]);
+	                    }else{
+	                        alert('keine Hauptkamera vorhanden!');
+	                    }
+	                }
+	            });
+	        }else{
+	            console.error('keine Kameras vorhanden');
+	            alert('keine Kameras vorhanden');
+	        }
+	    }).catch(function(e){
+	        console.error(e);
+	        alert(e);
+	    });
+	</script>
+	<div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+  	<label class="btn btn-primary active">
+    	<input type="radio" name="options" value="1" autocomplete="off" checked>Frontkamera
+  	</label>
+  	<label class="btn btn-secondary">
+    	<input type="radio" name="options" value="2" autocomplete="off">Hauptkamera
+ 	 </label>
+ 	 <label class="btn btn-third">
+    	<input type="radio" name="options" value="3" autocomplete="off">Hauptkamera
+ 	 </label>
+ 	 <label class="btn btn-four">
+    	<input type="radio" name="options" value="4" autocomplete="off">Hauptkamera
+ 	 </label>
+	</div>
+</div>
 </body>
 </html>
