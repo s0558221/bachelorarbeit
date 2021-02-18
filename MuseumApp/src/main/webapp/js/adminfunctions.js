@@ -2,21 +2,33 @@ function clearQRCode()
 {
 	document.getElementById("linkText").value = "";
 	document.getElementById("qrcode").innerHTML = "";
-	qrcode.clear();
+	document.getElementById("qrcode").title = "";
 }
 
 function createQRCode()
 {
-	var link =document.getElementById("linkText").value;
+	var qrtype = document.getElementById("qrContentType").value;
+	
+	if(qrtype==0)
+	{
+		var link =document.getElementById("linkText").value;
+		console.log(link);
+	}
+	else if(qrtype==1)
+	{
+		var filename = document.getElementById("qrFiles").value;
+		var link = 'https://192.168.178.3:8443/MuseumApp/rest/upload/GetByName?name='+filename;
+		console.log(link);
+	}
 	new QRCode(document.getElementById("qrcode"), link);
 }
 
 function addTopic()
 {
 	var xhr = new XMLHttpRequest();
-	const url = '../rest/topic/Add';
+	const url = '../rest/Thema/Add';
 
-	var topic={
+	var thema={
 		text:document.getElementById('newTopic').value
 	};
 	
@@ -25,7 +37,7 @@ function addTopic()
 	xhr.onerror = function() {
 		alert("Connecting to localhost with " + url + " failed!\n");
 	};
-	xhr.send(JSON.stringify(topic));
+	xhr.send(JSON.stringify(thema));
 
 	
 	document.getElementById("newTopic").value ='';
@@ -42,7 +54,7 @@ defaultOption.text = 'Bitte Themenbereich wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = '../rest/topic';
+const url = '../rest/Thema';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -78,7 +90,7 @@ defaultOption.text = 'Bitte Schwierigkeit wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = '../rest/difficulty';
+const url = '../rest/Schwierigkeit';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -114,7 +126,7 @@ defaultOption.text = 'Bitte Frage wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = '../rest/question';
+const url = '../rest/Frage';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -142,7 +154,7 @@ request.send();
 function questionSelect(){
 
 	var questionId = document.getElementById('questions-existing').value;
-	var url = '../rest/question/FindById?';
+	var url = '../rest/Frage/FindById?';
 	url = url + "id=" + questionId;
 
 	const request = new XMLHttpRequest();
@@ -154,9 +166,9 @@ function questionSelect(){
     		let questionTextbox = document.getElementById("actualQuestion")
     		questionTextbox.value = question.text;
     		let topicdropdown = document.getElementById("questionTopic");
-			topicdropdown.selectedIndex = question.topic;
+			topicdropdown.selectedIndex = question.thema;
 			let difficultdropdown = document.getElementById("questionDifficulty");
-			difficultdropdown.selectedIndex = question.difficulty;
+			difficultdropdown.selectedIndex = question.schwierigkeit;
 			let questionIdTextbox = document.getElementById("questionId");
     		questionIdTextbox.value = question.id;
 			getAnswers(question.id);
@@ -172,8 +184,8 @@ function questionSelect(){
 }
 
 function getAnswers(questionid){
-var url = '../rest/answer/FindByQuestionId?';
-url = url + "questionid=" + questionid;
+var url = '../rest/Antwort/FindByFragenId?';
+url = url + "frage=" + questionid;
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -188,7 +200,7 @@ request.onload = function() {
 			let textA = document.getElementById('answerA');
 			textA.value = answer['text'];
 			let aCorrect = document.getElementById('answerAcorrect');
-			aCorrect.checked  = answer['isCorrect'];
+			aCorrect.checked  = answer['istKorrekt'];
 			answerAid.value=answer['id'];
 		}
 		if(i==1)
@@ -197,7 +209,7 @@ request.onload = function() {
 			let textB = document.getElementById('answerB');
 			textB.value = answer['text'];
 			let bCorrect = document.getElementById('answerBcorrect');
-			bCorrect.checked  = answer['isCorrect'];
+			bCorrect.checked  = answer['istKorrekt'];
 			answerBid.value=answer['id'];
 		}
 		if(i==2)
@@ -206,7 +218,7 @@ request.onload = function() {
 			let textC = document.getElementById('answerC');
 			textC.value = answer['text'];
 			let cCorrect = document.getElementById('answerCcorrect');
-			cCorrect.checked  = answer['isCorrect'];
+			cCorrect.checked  = answer['istKorrekt'];
 			answerCid.value=answer['id'];
 		}
 		if(i==3)
@@ -215,7 +227,7 @@ request.onload = function() {
 			let textD = document.getElementById('answerD');
 			textD.value = answer['text'];
 			let dCorrect = document.getElementById('answerDcorrect');
-			dCorrect.checked  = answer['isCorrect'];
+			dCorrect.checked  = answer['istKorrekt'];
 			answerDid.value=answer['id'];
 		}
     }
@@ -233,12 +245,12 @@ function saveQuestion(){
 	var question={
 		id:document.getElementById('questionId').value,
 		text:document.getElementById('actualQuestion').value,
-		difficulty:document.getElementById('questionDifficulty').value,
-		topic:document.getElementById('questionTopic').value
+		schwierigkeit:document.getElementById('questionDifficulty').value,
+		thema:document.getElementById('questionTopic').value
 	};
 	
 	var xhr = new XMLHttpRequest();
-	const url = '../rest/question/Add';
+	const url = '../rest/Frage/Add';
 	
 	xhr.open("POST", url, true);
 
@@ -264,11 +276,11 @@ function saveAnswer(questionId,answerText,answerCorrect,answerId)
 		id:answerId,
 		text:answerText,
 		id_frage:questionId,
-		isCorrect:answerCorrect
+		istKorrekt:answerCorrect
 	};
 	
 	var xhr = new XMLHttpRequest();
-	const url = '../rest/answer/Add';
+	const url = '../rest/Antwort/Add';
 	
 	xhr.open("POST", url, true);
 
@@ -340,4 +352,60 @@ function uploadFile(){
 		alert("Connecting to localhost with " + url + " failed!\n");
 	};
 	xhr.send(form);
+}
+
+function changeQRContentType(){
+	var contentType = document.getElementById("qrContentType").value;
+	if(contentType!=-1)
+	{
+		if(contentType==1)
+		{
+			var div = document.getElementById("createQRWebsite");
+			div.style.display = 'none';
+			div = document.getElementById("createQRFile");
+			div.style.display = 'inline-block';
+		}else
+		{
+			var div = document.getElementById("createQRWebsite");
+			div.style.display = 'inline-block';
+			div = document.getElementById("createQRFile");
+			div.style.display = 'none';
+		}
+	}else
+	{
+		var div = document.getElementById("createQRWebsite");
+		div.style.display = 'none';
+		div = document.getElementById("createQRFile");
+		div.style.display = 'none';
+	}
+}
+
+
+function getUploadedFileNames(){
+let dropdown = document.getElementById("qrFiles");
+dropdown.length = 0;
+
+const url = '../rest/upload/GetFileList';
+
+const request = new XMLHttpRequest();
+request.open('GET', url, true);
+
+request.onload = function() { 
+
+if (request.status === 200) {
+    const data = JSON.parse(request.responseText);
+    for (let i = 0; i < data.length; i++) {
+    	option = document.createElement('option');
+      	option.text = data[i];
+      	option.value = data[i];
+      	dropdown.add(option);
+   }
+  }
+}
+
+request.onerror = function() {
+  console.error('An error occurred fetching the JSON from ' + url);
+};
+
+request.send();
 }

@@ -11,11 +11,14 @@
 		<a href="../index.html" class="button">Zurück</a><br>
 	</div>
 	<div id="erkundung" class="container">
-	<h2>interaktiver Museumsbesuch</h2>
-	<section>
-		<h3>Erklärung:</h3>
-		Nutzen Sie die Möglichkeit, mit Hilfe Ihrer Smartphone-Kamera, weitere Infos zu den Ausstellungsstücken zu erhalten.
-	</section>
+	<header>
+		<h2>interaktiver Museumsbesuch</h2>
+	</header>
+	<Label for="camera-select">Kameras: </Label>
+	<select name="cameras" id="camera-select">
+		<option value=0>Frontkamera</option>
+		<option value=1>Hauptkamera</option>
+	</select><br>
 	<video id="preview"></video>
 	<script type="text/javascript">
 	   	var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
@@ -25,29 +28,16 @@
 	    Instascan.Camera.getCameras().then(function (cameras){
 	        if(cameras.length>0){
 	            scanner.start(cameras[0]);
-	            $('[name="options"]').on('change',function(){
-	                if($(this).val()==1){
+	            $('[name="cameras"]').on('change',function(){
+	                if($(this).val()==0){
 	                    if(cameras[0]!=""){
 	                        scanner.start(cameras[0]);
 	                    }else{
 	                        alert('keine Frontkamera vorhanden!');
 	                    }
-	                }else if($(this).val()==2){
+	                }else if($(this).val()==1){
 	                    if(cameras[1]!=""){
 	                        scanner.start(cameras[1]);
-	                    }else{
-	                        alert('keine Hauptkamera vorhanden!');
-	                    }
-	                }else if($(this).val()==3){
-	                    if(cameras[2]!=""){
-	                        scanner.start(cameras[2]);
-	                    }else{
-	                        alert('keine Hauptkamera vorhanden!');
-	                    }
-	                }
-	                else if($(this).val()==4){
-	                    if(cameras[3]!=""){
-	                        scanner.start(cameras[3]);
 	                    }else{
 	                        alert('keine Hauptkamera vorhanden!');
 	                    }
@@ -62,20 +52,9 @@
 	        alert(e);
 	    });
 	</script>
-	<div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-  	<label class="btn btn-primary active">
-    	<input type="radio" name="options" value="1" autocomplete="off" checked>Frontkamera
-  	</label>
-  	<label class="btn btn-secondary">
-    	<input type="radio" name="options" value="2" autocomplete="off">Hauptkamera
- 	 </label>
- 	 <label class="btn btn-third">
-    	<input type="radio" name="options" value="3" autocomplete="off">Hauptkamera
- 	 </label>
- 	 <label class="btn btn-four">
-    	<input type="radio" name="options" value="4" autocomplete="off">Hauptkamera
- 	 </label>
-	</div>
+	<h3>Erklärung:</h3>
+		Nutzen Sie die Möglichkeit, mit Hilfe Ihrer Smartphone-Kamera, weitere Infos zu den Ausstellungsstücken zu erhalten. Einfach die QR-Codes an den Ausstellungsstücken scannen und weitere Infos erhalten.
+	
 </div>
 </body>
 </html>

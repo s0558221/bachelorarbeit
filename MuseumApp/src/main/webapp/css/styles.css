@@ -5,8 +5,8 @@
   	text-align: center;
   	text-decoration: none;
   	display: inline-block;
-  	width:300px;
   	font-size:3em; 
+  	width:40%;
 }
 
 header{
@@ -16,7 +16,7 @@ header{
 
 #qrcode {
   	width:100px;
-  	height:100px;
+  	height:300px;
   	margin-top:15px;
 }
 
@@ -57,10 +57,49 @@ header{
   	font-size:2em; 
 }
 
+button[disabled] {
+	background-color: #e1e6e5;
+  	color: grey;
+  	padding: 14px 25px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	width:300px;
+  	font-size:2em; 
+}
+
 .quizanswers{
 	font-size:1.5em;
 }
 
 #question-header, #answerLabel, #noQuestionsLabel{
 	font-size:1.5em;
+}
+
+summary:focus {
+    outline: none;
+}
+
+#adminCreateQuestion label, input[type=text], select{
+	width:250px;
+	display:inline-block;
+	font-size:1em;
+}
+
+#adminCreateTopic label, input[type=text], select{
+	width:250px;
+	display:inline-block;
+	font-size:1em;
+}
+
+#adminCreateQuestion label, input[type=text], select{
+	width:250px;
+	display:inline-block;
+	font-size:1em;
+}
+
+#adminCreateQR label, select, input[type=text]{
+	width:300px;
+	display:inline-block;
+	font-size:1em;
 }

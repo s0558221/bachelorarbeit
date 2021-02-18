@@ -41,7 +41,7 @@ defaultOption.text = 'Bitte Schwierigkeit wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = '../rest/difficulty';
+const url = '../rest/Schwierigkeit';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -78,7 +78,7 @@ defaultOption.text = 'Bitte Themenbereich wählen';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = '../rest/topic';
+const url = '../rest/Thema';
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -105,8 +105,8 @@ request.send();
 
 function getAnswersByQuestionID(questionId) {
 	
-var url = '../rest/answer/FindByQuestionId?';
-url = url + "questionid=" + questionId;
+var url = '../rest/Antwort/FindByFragenId?';
+url = url + "frage=" + questionId;
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);
@@ -119,7 +119,7 @@ request.onload = function() {
 		{
 			let radio = document.getElementById('answerA');
 			answer = answers[i];
-			radio.value=answer['isCorrect'];
+			radio.value=answer['istKorrekt'];
 			let label =  document.getElementById('answerALabel');
 			label.innerHTML=answers[i].text;
 		}
@@ -127,7 +127,7 @@ request.onload = function() {
 		{
 			let radio = document.getElementById('answerB');
 			answer = answers[i];
-			radio.value=answer['isCorrect'];
+			radio.value=answer['istKorrekt'];
 			let label =  document.getElementById('answerBLabel');
 			label.innerHTML=answers[i].text;
 		}
@@ -135,7 +135,7 @@ request.onload = function() {
 		{
 			let radio = document.getElementById('answerC');
 			answer = answers[i];
-			radio.value=answer['isCorrect'];
+			radio.value=answer['istKorrekt'];
 			let label =  document.getElementById('answerCLabel');
 			label.innerHTML=answers[i].text;
 		}
@@ -143,14 +143,12 @@ request.onload = function() {
 		{
 			let radio = document.getElementById('answerD');
 			answer = answers[i];
-			radio.value=answer['isCorrect'];
+			radio.value=answer['istKorrekt'];
 			let label =  document.getElementById('answerDLabel');
 			label.innerHTML=answers[i].text;
 		}
     }
-   } else {
-    // Reached the server, but it returned an error
-  }   
+   }  
 }
 
 request.onerror = function() {
@@ -164,8 +162,8 @@ function getQuestionsByDifficultyAndTopic(){
 var difficulty = document.getElementById('difficulties-select').value;
 var topic = document.getElementById('topics-select').value;
 
-var url = '../rest/question/FindByTopicIdAndDifficultyId?';
-url = url + "topicId=" + topic + "&difficultyId="+difficulty;
+var url = '../rest/Frage/FindByThemaUndSchwierigkeit?';
+url = url + "thema=" + topic + "&schwierigkeit="+difficulty;
 
 const request = new XMLHttpRequest();
 request.open('GET', url, true);

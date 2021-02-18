@@ -8,45 +8,58 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<a href="../index.html" class="button">Zurück</a><br>
-	</div>
-	<h1>Administration</h1>
+	<header>
+		<h1>Administration</h1>
+	</header>
 		<h2>Ausstellung</h2>
-		<div id="upload">
-			<h3>Datei-Upload</h3>
+		<details>
+			<summary>Datei-Upload</summary><br>
 			<form action="../rest/upload/file" method="post" enctype="multipart/form-data">
             	<input type="file" name="file" id="file" size="45" accept=".pdf,.jpg,.png,.bmp,.mp4" /><br>
         		<Button onclick="uploadFile()">Datei hochladen</Button>
         	</form>
-		</div>
-		<div id="qrcodeerstellen">
-			<h3>QR-Codes erstellen</h3>
-				<label for="linkText">Link zur Homepage:
-    				<input type="text" id="linkText" name="linkText">
-  				</label><br>
-  				<div id="qrcode"></div>
-  				<Button onclick="createQRCode()">QR-Code erstellen</Button>
-  				<Button onclick="clearQRCode()">Zurücksetzen</Button><br>
-		</div>
-		<div id="adminquizsettings">
-			<h2>Quiz</h2>
-				<div id="createTopic">
-					<h3>Themengebiete erstellen</h3>
-					<Label for="topics-select">vorhandene Themen: </Label>
-					<select name="topics" id="topics-existing">
-					</select>
-					<script>
-						getAllTopics("topics-existing")
-					</script><br>
-					<label for="newTopic">neues Thema:
-    					<input type="text" id="newTopic" name="newTopic">
-  					</label>
-  					<Button id=createTopicBtn onclick="addTopic()">erstellen</Button>
-				</div>
-				<div id="createQuestion">
-					<h3>Fragen erstellen bzw. bearbeiten</h3>
-					<Label for="questions-existing">vorhandene Fragen: </Label>
+		</details><br>
+		<details id="adminCreateQR">
+			<summary>QR-Codes erstellen</summary><br>
+			<Label for="qrContentType">Wofür?</Label>
+			<select id="qrContentType" onchange="changeQRContentType()">
+				<option selected="selected" value=-1>Bitte wählen</option>
+				<option value=0>Webseite</option>
+				<option value=1>Datei</option>
+			</select><br>
+			<div style="display: none" id="createQRWebsite">
+				<Label for="linkText">Link zur Homepage:</Label>
+    			<input type="text" id="linkText" name="linkText"/>
+    		</div>
+    		<div style="display: none" id="createQRFile">
+				<Label for="qrFiles">Datei:</Label>
+				<select id="qrFiles">
+				</select>
+				<script>
+					getUploadedFileNames();
+				</script>
+    		</div>
+  			<p>QR-Code:</p>
+  			<div id="qrcode"></div>
+  			<Button onclick="createQRCode()">QR-Code erstellen</Button>
+  			<Button onclick="clearQRCode()">Zurücksetzen</Button><br>
+		</details><br>
+		<h2>Quiz</h2>
+		<details id="adminCreateTopic">
+			<summary>Themengebiete erstellen</summary><br>
+			<Label for="topics-select">vorhandene Themen: </Label>
+			<select name="topics" id="topics-existing">
+			</select>
+			<script>
+				getAllTopics("topics-existing")
+			</script><br>
+			<Label for="newTopic">neues Thema:</Label>
+    		<input type="text" id="newTopic" name="newTopic">
+  			<Button id=createTopicBtn onclick="addTopic()">erstellen</Button>
+		</details><br>
+		<details id="adminCreateQuestion">
+			<summary>Fragen erstellen bzw. bearbeiten</summary><br>
+			<Label for="questions-existing">vorhandene Fragen: </Label>
 					<select name="questions" id="questions-existing" onchange="questionSelect()">
 					</select>
 					<script>
@@ -91,7 +104,6 @@
   					<label for="answerDcorrect">richtige Antwort</label>
   					<input type="text" id="answerDid" name="answerDid" class="idBoxes"><br>
   					<Button id="saveQuestionBtn" onclick="saveQuestion()">Speichern</Button>
-				</div>
-		</div>
+		</details>
 </body>
 </html>
