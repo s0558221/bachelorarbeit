@@ -17,8 +17,7 @@ function createQRCode()
 	else if(qrtype==1)
 	{
 		var filename = document.getElementById("qrFiles").value;
-		var link = 'https://192.168.178.3:8443/MuseumApp/rest/upload/GetByName?name='+filename;
-		console.log(link);
+		var link = 'https://192.168.178.3:443/MuseumApp/rest/upload/GetByName?name='+filename;
 	}
 	new QRCode(document.getElementById("qrcode"), link);
 }
@@ -38,8 +37,6 @@ function addTopic()
 		alert("Connecting to localhost with " + url + " failed!\n");
 	};
 	xhr.send(JSON.stringify(thema));
-
-	
 	document.getElementById("newTopic").value ='';
 }
 

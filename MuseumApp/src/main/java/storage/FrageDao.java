@@ -20,8 +20,8 @@ public class FrageDao {
 	private static String GET_ALLE_FRAGEN = "select * from Quiz_Fragen";
 	private static String GET_FRAGE_BY_ID = "select * from Quiz_Fragen where id = ?";
 	private static String GET_FRAGE_BY_THEMA_UND_SCHWIERIGKEIT = "select * from Quiz_Fragen where Id_Themengebiet = ? AND Id_Schwierigkeit = ?";
-	private static String ADD_FRAGE = "INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES(?,?,?) RETURNING id";
-	private static String UPDATE_FRAGE = "UPDATE Quiz_Fragen SET Frage = ?,Id_Schwierigkeit = ?,Id_Themengebiet = ? WHERE Id = ? RETURNING id";
+	private static String ADD_FRAGE = "INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES(?,?,?)";
+	private static String UPDATE_FRAGE = "UPDATE Quiz_Fragen SET Frage = ?,Id_Schwierigkeit = ?,Id_Themengebiet = ? WHERE Id = ?";
 	
 	private  DataSource ds;
 	 
@@ -172,20 +172,16 @@ public class FrageDao {
 	        int id = 0;
 	        try {
 	            con = ds.getConnection();
-	            stmt = con.prepareStatement(ADD_FRAGE, Statement.RETURN_GENERATED_KEYS);
+	            stmt = con.prepareStatement(ADD_FRAGE,Statement.RETURN_GENERATED_KEYS);
 	            stmt.setString(1, q.getText());
 	            stmt.setInt(2, q.getSchwierigkeit());
 	            stmt.setInt(3, q.getThema());
 	            stmt.executeUpdate();
-	            
-	            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-	                if (generatedKeys.next()) {
-	                	id = (int) generatedKeys.getLong(1);
-	                }
-	                else {
-	                    throw new SQLException("Frage erstellen gescheitert, keine ID erhalten.");
-	                }
-	            }
+	            rs = stmt.getGeneratedKeys();
+                if(rs.next())
+                {
+                    id = rs.getInt(1);
+                }
 	        }catch (SQLException e) {
 	            System.out.println("SQLException beim hinzufügen von frage");
 	            e.printStackTrace();
@@ -208,21 +204,17 @@ public class FrageDao {
 	        int id = 0;
 	        try {
 	            con = ds.getConnection();
-	            stmt = con.prepareStatement(UPDATE_FRAGE, Statement.RETURN_GENERATED_KEYS);
+	            stmt = con.prepareStatement(UPDATE_FRAGE,Statement.RETURN_GENERATED_KEYS);
 	            stmt.setString(1, q.getText());
 	            stmt.setInt(2, q.getSchwierigkeit());
 	            stmt.setInt(3, q.getThema());
 	            stmt.setInt(4, q.getId());
 	            stmt.executeUpdate();
-	            
-	            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-	                if (generatedKeys.next()) {
-	                	id = (int) generatedKeys.getLong(1);
-	                }
-	                else {
-	                    throw new SQLException("updaten der Frage gescheitert, keine ID erhalten.");
-	                }
-	            }
+	            rs = stmt.getGeneratedKeys();
+                if(rs.next())
+                {
+                    id = rs.getInt(1);
+                }
 	        }catch (SQLException e) {
 	            System.out.println("SQLException beim Updaten der Frage");
 	            e.printStackTrace();
