@@ -25,6 +25,9 @@ INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wie laut
 INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wie heißt der erste Mikroprozessor der Firma Intel?',2,2);
 INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wann wurde die Von-Neumann-Architektur vorgestellt?',2,2);
 INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wann wurde Adam Ries geboren?',1,4);
+INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wie lange halten Magentbänder im Durchschnitt?',2,3);
+INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wann wurde die Firma AMD gegründet?',1,2);
+INSERT INTO Quiz_Fragen (Frage,Id_Schwierigkeit,Id_Themengebiet)VALUES('Wie viele Zeichen passen auf eine Lochkarte?',2,3);
 
 INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('Floppy',1,false);
 INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('SSD',1,true);
@@ -115,3 +118,19 @@ INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1432',18,false)
 INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1492',18,true);
 INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1567',18,false);
 INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1637',18,false);
+
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('5 Jahre',19,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('10 Jahre',19,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('20 Jahre',19,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('< 30 Jahr',19,true);
+
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1. Juni 1970',20,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1. Mai 1969',20,true);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1.Juli 1971',20,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('1.August 1968',20,false);
+
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('70',21,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('80',21,true);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('90',21,false);
+INSERT INTO Quiz_Antworten (Antwort,Id_Frage,IstRichtig) VALUES('100',21,false);
+	
