@@ -12,12 +12,10 @@ function createQRCode()
 	if(qrtype==0)
 	{
 		var link =document.getElementById("linkText").value;
-		console.log(link);
 	}
 	else if(qrtype==1)
 	{
-		var filename = document.getElementById("qrFiles").value;
-		var link = 'https://192.168.178.3:443/MuseumApp/rest/upload/GetByName?name='+filename;
+		var link = document.getElementById("qrFiles").value;
 	}
 	new QRCode(document.getElementById("qrcode"), link);
 }
@@ -32,9 +30,15 @@ function addTopic()
 	};
 	
 	xhr.open("POST", url, true);
-
+	xhr.onload = function() {
+  		if (xhr.status === 204) {
+		alert("Thema erfolgreich erstellt");
+   		window.location.reload(true);
+	}
+}
+	
 	xhr.onerror = function() {
-		alert("Connecting to localhost with " + url + " failed!\n");
+		alert("Connecting to server with " + url + " failed!\n");
 	};
 	xhr.send(JSON.stringify(thema));
 	document.getElementById("newTopic").value ='';
@@ -254,21 +258,27 @@ function saveQuestion(){
 	xhr.onload = function() {
   	if (xhr.status === 200) {
     var questionId = JSON.parse(xhr.responseText);
+    console.log(questionId);
     saveAnswer(questionId,document.getElementById('answerA').value,document.getElementById('answerAcorrect').checked,document.getElementById('answerAid').value);
    	saveAnswer(questionId,document.getElementById('answerB').value,document.getElementById('answerBcorrect').checked,document.getElementById('answerBid').value);
    	saveAnswer(questionId,document.getElementById('answerC').value,document.getElementById('answerCcorrect').checked,document.getElementById('answerCid').value);
    	saveAnswer(questionId,document.getElementById('answerD').value,document.getElementById('answerDcorrect').checked,document.getElementById('answerDid').value);
+   	alert("Frage erfolgreich erstellt");
+   	window.location.reload(true);
    	}
    	}
 
 	xhr.onerror = function() {
-		alert("Connecting to localhost with " + url + " failed!\n");
+		alert("Connecting to server with " + url + " failed!\n");
 	};
 	xhr.send(JSON.stringify(question));
 }
 
 function saveAnswer(questionId,answerText,answerCorrect,answerId)
 {
+	var xhr = new XMLHttpRequest();
+	const url = '../rest/Antwort/Add';
+
 	var answer={
 		id:answerId,
 		text:answerText,
@@ -276,13 +286,10 @@ function saveAnswer(questionId,answerText,answerCorrect,answerId)
 		istKorrekt:answerCorrect
 	};
 	
-	var xhr = new XMLHttpRequest();
-	const url = '../rest/Antwort/Add';
-	
 	xhr.open("POST", url, true);
 
 	xhr.onerror = function() {
-		alert("Connecting to localhost with " + url + " failed!\n");
+		alert("Connecting to server with " + url + " failed!\n");
 	};
 	xhr.send(JSON.stringify(answer));
 }
@@ -339,14 +346,9 @@ function uploadFile(){
 	const url = '../rest/upload/file';
 	
 	xhr.open("POST", url, true);
-	xhr.onload = function() {
-  		if (xhr.status === 200) {
-  			console.log("Test");
-    	}
-   	}
    	
 	xhr.onerror = function() {
-		alert("Connecting to localhost with " + url + " failed!\n");
+		alert("Connecting to server with " + url + " failed!\n");
 	};
 	xhr.send(form);
 }

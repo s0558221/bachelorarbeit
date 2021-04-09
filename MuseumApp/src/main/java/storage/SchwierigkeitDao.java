@@ -14,12 +14,31 @@ import javax.sql.DataSource;
 
 import bean.Schwierigkeit;
 
+/**
+ * Die Klasse SchwierigkeitDao kommuniziert mit der Datenbank-Tabelle Quiz_Lookup_Schwierigkeiten. Sie ist fuer das Laden und Speichern des jeweiligen Datensaetze in und aus der Datenbank zustaendig.
+ * @author Roy Beyer
+ * @version 1.0
+ */
 public class SchwierigkeitDao {
+	
+	/**
+	 * der vorbereitete SQL-Befehl, der fuer den Abruf aller Datensaetze aus der Datenbank genutzt wird
+	 */
 	private static String GET_ALLE_SCHWIERIGKEITEN = "select * from Quiz_Lookup_Schwierigkeiten";
+	
+	/**
+	 * der vorbereitete SQL-Befehl, der fuer den Abruf eines bestimmten Datensaetzes aus der Datenbank genutzt wird
+	 */
 	private static String GET_SCHWIERIGKEIT_BY_ID = "select * from Quiz_Lookup_Schwierigkeiten where id = ?";
 
+	/**
+	 * die Datenquelle fuer die Verbindung mit der Datenbankbank
+	 */
 	 private  DataSource ds;
 	 
+	 /**
+	  * der Standard-Konstruktor stellt beim Instanziieren die Verbindung zur Datenbank her
+	  */
 	 public SchwierigkeitDao () {      
 	        try {
 	            Context ctx = new InitialContext();
@@ -30,6 +49,11 @@ public class SchwierigkeitDao {
 	        } 
 	    }
 	 
+	 /**
+	  * ruft einen bestimmten Datensatz anhand seiner Id aus der Datenbank ab und gibt ihn an den Webservice zurueck
+	  * @param id die Id des Schwierigkeitsgrads
+	  * @return der Schwierigkeitsgrad
+	  */
 	 public Schwierigkeit getSchwierigkeitById(String id) {
 		 Schwierigkeit schwierigkeit = new Schwierigkeit();
 			int i = -1;
@@ -64,7 +88,7 @@ public class SchwierigkeitDao {
 	                if (stmt != null) stmt.close();
 	                if (con != null) con.close();
 	            } catch (Exception e) {
-	                System.out.println("Exception in closing DB resources");
+	                System.out.println("Exception beim Schließen der Datenbank-Verbindung.");
 	            } 
 	        }
 	        }
@@ -72,6 +96,10 @@ public class SchwierigkeitDao {
 	        	return null;
 		}
 	 
+	 /**
+	  * ruft alle Datensaetze aus der Datenbanktabelle ab und gibt sie an den Webservice zurueck
+	  * @return eine Sammlung aller Schwierigkeitsgrade
+	  */
 	 public Collection<Schwierigkeit> getAlleSchwierigkeiten() {
 			Collection<Schwierigkeit> schwierigkeiten = new ArrayList<Schwierigkeit>();
 
@@ -101,7 +129,7 @@ public class SchwierigkeitDao {
 	                if (stmt != null) stmt.close();
 	                if (con != null) con.close();
 	            } catch (Exception e) {
-	                System.out.println("Exception in closing DB resources");
+	                System.out.println("Exception beim Schließen der Datenbank-Verbindung.");
 	            } 
 	        }
 		}

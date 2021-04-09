@@ -4,60 +4,45 @@
     	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
 	   	<meta charset="UTF-8" />
 	   	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	    <!--<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>-->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script type="text/javascript" src="../js/webrtc-adapter.js"></script>
     	<script type="text/javascript" src="../js/instascan.min.js"></script>
+    	<script type="text/javascript" src="../js/scannerfunctions.js"></script>
 </head>
 <body>
 	<div>
 		<a href="../index.html" class="button">Zurück</a><br>
 	</div>
-	<div id="erkundung" class="container">
+	<div id="erkundung" class="container" style="position:relative">
 	<header>
-		<h2>interaktiver Museumsbesuch</h2>
+		<h1>interaktiver Museumsbesuch</h1>
 	</header>
-	<Label for="camera-select">Kameras: </Label>
-	<select name="cameras" id="camera-select">
+	<h2>Erklärung:</h2>
+	Nutzen Sie die Möglichkeit, mit Hilfe Ihrer Smartphone-Kamera, weitere Infos zu den Ausstellungsstücken zu erhalten. Einfach die QR-Codes an den Ausstellungsstücken scannen und weitere Infos erhalten.<br>
+	<input type="button" value="neuen Code scannen" onclick="scanNewCode()" style="font-size:30px"/><br>
+	<div id="scanner" style="position:absolute;visibility:hidden">
+	<Label for="camera-select" style="font-size:30px">Kameras: </Label>
+	<select name="cameras" id="camera-select" style="font-size:30px">
 		<option value=0>Frontkamera</option>
 		<option value=1>Hauptkamera</option>
 	</select><br>
-	<video class="player" style="max-width:100%" id="preview" playsinline></video></video>
+	<br>
+	<video class="player" style="max-width:100%" id="preview" playsinline></video>
 	<script>
-	var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
-    scanner.addListener('scan',function(content){
-        window.location.href=content;
-    });
-    Instascan.Camera.getCameras().then(function (cameras){
-        if(cameras.length>0){
-            scanner.start(cameras[0]);
-            $('[name="cameras"]').on('change',function(){
-                if($(this).val()==0){
-                    if(cameras[0]!=""){
-                        scanner.start(cameras[0]);
-                    }else{
-                        alert('keine Frontkamera vorhanden!');
-                    }
-                }else if($(this).val()==1){
-                    if(cameras[1]!=""){
-                        scanner.start(cameras[1]);
-                    }else{
-                        alert('keine Hauptkamera vorhanden!');
-                    }
-                }
-            });
-        }else{
-            console.error('keine Kameras vorhanden');
-            alert('keine Kameras vorhanden');
-        }
-    }).catch(function(e){
-        console.error(e);
-        alert(e);
-    });
+		startScanner();
 	</script>
-	<h3>Erklärung:</h3>
-		Nutzen Sie die Möglichkeit, mit Hilfe Ihrer Smartphone-Kamera, weitere Infos zu den Ausstellungsstücken zu erhalten. Einfach die QR-Codes an den Ausstellungsstücken scannen und weitere Infos erhalten.
-	
+	</div>
+	<div id="ergebnisse" style="position:absolute;visibility:hidden">
+	<h1>Ergebnis:</h1><br>
+		<div id="ergbenisArea" style="position:relative">
+			<div id="imageArea" style="position:absolute;visibility:hidden">
+				<img id="image"/>
+			</div>
+			<div id="videoArea" style="position:absolute;visibility:hidden">
+				<video id="video" controls></video>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

@@ -10,10 +10,22 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import storage.SchwierigkeitDao;
 
+/**
+ * Die Klasse SchwierigkeitWebService nimmt Anfragen des Clients entgegen und laedt Schwierigkeitsgrade
+ * @author Roy Beyer
+ * @version 1.0
+ */
 @Path("Schwierigkeit")
 public class SchwierigkeitWebService {
-private SchwierigkeitDao schwierigkeitDao;
+	/**
+	 * dient zur Kommunikation mit der Datenbank
+	 */
+	private SchwierigkeitDao schwierigkeitDao;
 	
+	/**
+	 * ruft alle Schwierigkeitsgrade aus der Datenbank ab
+	 * @return die abgerufenen Schwierigkeitsgrade
+	 */
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<Schwierigkeit> getAllDifficulties() {
@@ -21,6 +33,11 @@ private SchwierigkeitDao schwierigkeitDao;
         return schwierigkeitDao.getAlleSchwierigkeiten();
     }
 	
+	/**
+	 * ruft einen bestimmten Schwierigkeitsgrad anhand der uebergebenen Id ab
+	 * @param id die uebergebene Schwierigkeiten-Id
+	 * @return die abgerufene Schwierigkeit
+	 */
 	@GET 
 	@Path("/FindById")
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,6 +47,9 @@ private SchwierigkeitDao schwierigkeitDao;
 		return schwierigkeitDao.getSchwierigkeitById(id);
 	}
 
+	/**
+	 * intilialisert die Klasse SchwierigkeitDao fuer die Kommunikation mit der Datenbank
+	 */
 	private void initSchwierigkeitDao() 
 	{
 		schwierigkeitDao = new SchwierigkeitDao();

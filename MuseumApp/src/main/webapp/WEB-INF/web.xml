@@ -34,7 +34,7 @@
 	</security-constraint>
 	<security-constraint>    
   <web-resource-collection>
-     <web-resource-name>MySecuredResource-1</web-resource-name>
+     <web-resource-name>Mitarbeiterbereich</web-resource-name>
      <url-pattern>/html/admin.html</url-pattern>
   </web-resource-collection>
   <auth-constraint>

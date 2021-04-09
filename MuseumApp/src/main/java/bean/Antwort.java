@@ -7,9 +7,24 @@ package bean;
  */
 public class Antwort {
 	
+	/**
+	 * die Id der Antwort
+	 */
 	private Integer id;
+	
+	/**
+	 * der Antwort-Text
+	 */
 	private String text;
+	
+	/**
+	 * die Id der Frage, zu der die Anwort gehoert
+	 */
 	private Integer id_frage;
+	
+	/**
+	 * ist die Antwort richtig oder falsch
+	 */
 	private boolean istKorrekt;
 	
 	/**
@@ -73,7 +88,7 @@ public class Antwort {
 	
 	/**
 	 * setzt die ID der dazugehoerigen Frage
-	 * @param id_question die ID der dazugehoerigen Frage
+	 * @param id_frage die ID der dazugehoerigen Frage
 	 */
 	public void setId_frage(Integer id_frage) {
 		this.id_frage = id_frage;
@@ -89,7 +104,7 @@ public class Antwort {
 	
 	/**
 	 * setzt, ob die Antwort korrekt ist oder nicht
-	 * @param isCorrect Korrektheit der Antwort
+	 * @param istKorrekt Korrektheit der Antwort
 	 */
 	public void setIstKorrekt(boolean istKorrekt) {
 		this.istKorrekt = istKorrekt;
